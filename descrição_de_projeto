@@ -1,0 +1,38 @@
+Desafio: API de Gerenciamento de Livros
+Requisitos:
+A API deve permitir a criação, leitura, atualização e exclusão de informações sobre livros.
+
+Cada livro deve conter as seguintes informações:
+
+Título
+Autor
+Ano de publicação
+ISBN (International Standard Book Number)
+Número de páginas
+A API deve utilizar o banco de dados H2 para armazenar as informações dos livros.
+
+A API deve ser documentada usando o Swagger para que possa ser testada e explorada facilmente.
+
+Passos sugeridos:
+Inicialize um novo projeto Spring Boot com as dependências necessárias para o Spring Web e o banco de dados H2.
+
+Crie a entidade Livro com os atributos mencionados acima e as anotações do JPA para mapear a entidade ao banco de dados.
+
+Crie um repositório LivroRepository que estenda JpaRepository para permitir a interação com o banco de dados.
+
+Crie um serviço LivroService que utilize o LivroRepository para realizar operações de CRUD na entidade Livro.
+
+Crie um controlador LivroController que seja responsável por expor os endpoints para criar, ler, atualizar e excluir livros.
+
+Utilize as anotações do Swagger para documentar os endpoints do LivroController.
+
+Teste a API utilizando o Swagger UI ou alguma ferramenta de testes de APIs, como o Postman.
+
+Observações:
+Certifique-se de que as configurações do H2 Database e do Spring Boot estejam corretas no arquivo application.properties ou application.yml.
+
+Utilize a versão mais recente do Spring Boot e do Swagger para o desenvolvimento da API.
+
+Se encontrar dificuldades ao longo do processo, não hesite em pesquisar, consultar a documentação do Spring Boot e do Swagger, ou pedir ajuda em comunidades de desenvolvedores.
+
+Espero que este desafio seja útil para o seu aprendizado e que você se divirta criando a API de gerenciamento de livros! Se tiver alguma dúvida ou precisar de ajuda durante o desenvolvimento, estou aqui para ajudar. Boa codificação!
