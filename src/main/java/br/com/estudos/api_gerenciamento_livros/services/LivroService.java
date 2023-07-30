@@ -34,7 +34,14 @@ public LivroEntity inserirBook(bookDTO newBook) {
 	
 			return livroRepository.save(livro);
 }
-
+public LivroEntity BookDelete(Long id) {
+			try {
+				livroRepository.deleteById(id);
+			} catch (Exception e) {
+				throw new BadRequest("Livro não encontrado");
+			}
+		return null;	
+} 
 }
 
 
