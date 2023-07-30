@@ -10,6 +10,7 @@ import br.com.estudos.api_gerenciamento_livros.Exception.BadRequest;
 import br.com.estudos.api_gerenciamento_livros.Exception.NotFound;
 import br.com.estudos.api_gerenciamento_livros.Repository.LivroRepository;
 
+
 @Service
 public class LivroService {
 @Autowired
@@ -41,7 +42,17 @@ public LivroEntity BookDelete(Long id) {
 				throw new BadRequest("Livro não encontrado");
 			}
 		return null;	
-} 
+}
+
+public void alterarBook(Long id, bookDTO dto) {
+	boolean exists = livroRepository.existsById(id);
+			if(!exists) {
+			throw new BadRequest("Não foi possivel alterear o livro, ID não existe");
+			}
+	LivroEntity livro = modelMapper.map(dto,LivroEntity.class);
+	livro.setId(id);
+	livroRepository.save(livro);
+	} 	
 }
 
 
