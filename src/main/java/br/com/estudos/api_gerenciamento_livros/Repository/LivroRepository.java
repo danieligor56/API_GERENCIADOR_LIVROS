@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import br.com.estudos.api_gerenciamento_livros.LivroEntity;
-import java.util.List;
+
 
 
 @Repository

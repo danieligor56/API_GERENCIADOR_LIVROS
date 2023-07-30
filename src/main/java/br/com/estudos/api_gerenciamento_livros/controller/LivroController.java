@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import br.com.estudos.api_gerenciamento_livros.LivroEntity;
 import br.com.estudos.api_gerenciamento_livros.bookDTO;
+import br.com.estudos.api_gerenciamento_livros.Exception.InternalServerError;
 import br.com.estudos.api_gerenciamento_livros.Exception.NotFound;
 import br.com.estudos.api_gerenciamento_livros.services.LivroService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,12 +34,12 @@ public class LivroController {
 	@Autowired
 	private LivroService livroService;
 
-	@Operation(summary = "Procurar livroSSS ", description = "Faz a busca do livro utilizando o ID")
+	@Operation(summary = "GET BOOK", description = "Faz a busca do livro utilizando o ID")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "OK,LIVRO ENCONTRADO.", content = {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = LivroEntity.class)) }),
-			@ApiResponse(responseCode = "201", description = "LIVRO ADICIONADO.", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = LivroEntity.class)) }),
+			@ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERRO", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = InternalServerError.class)) }),
 			@ApiResponse(responseCode = "404", description = "LIVRO NÃO ENCONTRADO.", content = {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = NotFound.class)) }) })
 
@@ -49,11 +49,12 @@ public class LivroController {
 
 	}
 
-	@Operation(summary = "Cadastra um novo livro", description = "Faz o cadastro de um novo item")
+	@Operation(summary = "POST BOOK", description = "Cadastra novo livro")
 	@ApiResponses(value = {
-
-			@ApiResponse(responseCode = "201", description = "LIVRO ADICIONADO.", content = {
+			@ApiResponse(responseCode = "201", description = "Livro cadastrado com sucesso", content = {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = LivroEntity.class)) }),
+			@ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERRO", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = InternalServerError.class)) }),
 			@ApiResponse(responseCode = "404", description = "LIVRO NÃO ENCONTRADO.", content = {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = NotFound.class)) }) })
 	@PostMapping
@@ -64,22 +65,32 @@ public class LivroController {
 
 		return ResponseEntity.created(location).body(livroEntity);
 	}
-	@Operation(summary = "Cadastra um novo livro", description = "Faz o cadastro de um novo item")
-	@ApiResponses(value = {
 
-			@ApiResponse(responseCode = "201", description = "LIVRO ADICIONADO.", content = {
+	@Operation(summary = "DELETE BOOK", description = "Faz a exclusão do livro utilizando o ID")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Livro excluído", content = {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = LivroEntity.class)) }),
+			@ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERRO", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = InternalServerError.class)) }),
 			@ApiResponse(responseCode = "404", description = "LIVRO NÃO ENCONTRADO.", content = {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = NotFound.class)) }) })
 	@DeleteMapping("/livros/{id}")
-	public ResponseEntity<LivroEntity> deleteBook(@PathVariable Long id){
+	public ResponseEntity<LivroEntity> deleteBook(@PathVariable Long id) {
 		return ResponseEntity.ok(livroService.BookDelete(id));
-		}
+	}
+
+	@Operation(summary = "PUT BOOK", description = "Atualiza o cadastro de um livro")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "OK,LIVRO ENCONTRADO.", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = LivroEntity.class)) }),
+			@ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERRO", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = InternalServerError.class)) }),
+			@ApiResponse(responseCode = "404", description = "LIVRO NÃO ENCONTRADO.", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = NotFound.class)) }) })
 	@PutMapping("/livros/{id}")
-	public ResponseEntity<Void> alterarBook(@PathVariable("id") Long id,@Valid @RequestBody bookDTO dto){
-		livroService.alterarBook(id,dto); 
+	public ResponseEntity<Void> alterarBook(@PathVariable("id") Long id, @Valid @RequestBody bookDTO dto) {
+		livroService.alterarBook(id, dto);
 		return ResponseEntity.noContent().build();
 	}
-	
 
 }
